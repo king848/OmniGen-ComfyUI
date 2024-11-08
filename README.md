@@ -1,6 +1,7 @@
 # 优化
 添加LoadOmniGen节点，避免每次推理需要load safetensors。
-
+# model下载
+将Shitao/OmniGen-v1  下载到 ComfyUI/models/AIFSH/Shitao/OmniGen-v1
 
 # OmniGen-ComfyUI
 a custom node for [OmniGen](https://github.com/VectorSpaceLab/OmniGen), you can find [workflow here](./doc/)
