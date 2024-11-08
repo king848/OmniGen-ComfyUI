@@ -18,9 +18,6 @@ from OmniGen import OmniGenPipeline
 
 
 class LoadOmniGen:
-    def __init__(self):
-        if not osp.exists(osp.join(omnigen_dir,"model.safetensors")):
-            snapshot_download("Shitao/OmniGen-v1",local_dir=omnigen_dir+'/'+"OmniGen")
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
