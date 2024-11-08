@@ -1,0 +1,1404 @@
+{
+  "last_node_id": 61,
+  "last_link_id": 83,
+  "nodes": [
+    {
+      "id": 29,
+      "type": "VAELoader",
+      "pos": {
+        "0": -174.57728576660156,
+        "1": 1929.56591796875
+      },
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            29
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "vae_flux/diffusion_pytorch_model.safetensors"
+      ]
+    },
+    {
+      "id": 33,
+      "type": "DualCLIPLoader",
+      "pos": {
+        "0": -202.57730102539062,
+        "1": 1709.5625
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            28,
+            32
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DualCLIPLoader"
+      },
+      "widgets_values": [
+        "clip/t5xxl_fp8_e4m3fn.safetensors",
+        "clip/clip_l.safetensors",
+        "flux"
+      ]
+    },
+    {
+      "id": 37,
+      "type": "CLIPTextEncodeFlux",
+      "pos": {
+        "0": 146.42271423339844,
+        "1": 1739.5626220703125
+      },
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 14,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            33
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncodeFlux"
+      },
+      "widgets_values": [
+        "",
+        "",
+        3.5
+      ]
+    },
+    {
+      "id": 39,
+      "type": "EmptyLatentImage",
+      "pos": {
+        "0": 584.4226684570312,
+        "1": 1905.5653076171875
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            39
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        1
+      ]
+    },
+    {
+      "id": 16,
+      "type": "PromptTextNode",
+      "pos": {
+        "0": -149.89837646484375,
+        "1": 715.68115234375
+      },
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "TEXT",
+          "type": "TEXT",
+          "links": [
+            56
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PromptTextNode"
+      },
+      "widgets_values": [
+        "Detect the skeleton in image_1"
+      ]
+    },
+    {
+      "id": 19,
+      "type": "SaveImage",
+      "pos": {
+        "0": 821.36474609375,
+        "1": 904.13134765625
+      },
+      "size": {
+        "0": 315,
+        "1": 270
+      },
+      "flags": {},
+      "order": 27,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 54
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "SaveImage",
+      "pos": {
+        "0": 801.0152587890625,
+        "1": 172.76040649414062
+      },
+      "size": {
+        "0": 363.2634582519531,
+        "1": 295.03338623046875
+      },
+      "flags": {},
+      "order": 20,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 49
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 42,
+      "type": "OmniGenNode",
+      "pos": {
+        "0": 407.0152893066406,
+        "1": 76.76042175292969
+      },
+      "size": {
+        "0": 315,
+        "1": 378
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "prompt_text",
+          "type": "TEXT",
+          "link": 48
+        },
+        {
+          "name": "omnigen_pipe",
+          "type": "PIPE_LINE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "image_2",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "image_3",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            49
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OmniGenNode"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        20,
+        2.5,
+        1.6,
+        1024,
+        true,
+        false,
+        false,
+        101,
+        "randomize"
+      ]
+    },
+    {
+      "id": 45,
+      "type": "OmniGenNode",
+      "pos": {
+        "0": 409.36474609375,
+        "1": 847.13134765625
+      },
+      "size": {
+        "0": 315,
+        "1": 378
+      },
+      "flags": {},
+      "order": 26,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "prompt_text",
+          "type": "TEXT",
+          "link": 56
+        },
+        {
+          "name": "omnigen_pipe",
+          "type": "PIPE_LINE",
+          "link": 55,
+          "shape": 7
+        },
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "image_2",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "image_3",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            54
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OmniGenNode"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        20,
+        2.5,
+        1.6,
+        1024,
+        true,
+        false,
+        false,
+        1459,
+        "randomize"
+      ]
+    },
+    {
+      "id": 35,
+      "type": "VAEDecode",
+      "pos": {
+        "0": 356.4227294921875,
+        "1": 2000.568359375
+      },
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 23,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 34
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            35,
+            55
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 43,
+      "type": "OmniGenNode",
+      "pos": {
+        "0": 1736,
+        "1": 87
+      },
+      "size": {
+        "0": 315,
+        "1": 378
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "prompt_text",
+          "type": "TEXT",
+          "link": 50
+        },
+        {
+          "name": "omnigen_pipe",
+          "type": "PIPE_LINE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "image_2",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "image_3",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            51
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OmniGenNode"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        50,
+        2.5,
+        1.6,
+        1024,
+        true,
+        false,
+        false,
+        970,
+        "randomize"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "SaveImage",
+      "pos": {
+        "0": 2083,
+        "1": 173
+      },
+      "size": {
+        "0": 315,
+        "1": 270
+      },
+      "flags": {},
+      "order": 21,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 51
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 34,
+      "type": "CLIPTextEncodeFlux",
+      "pos": {
+        "0": 127.7254409790039,
+        "1": 1489.908447265625
+      },
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            31
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncodeFlux"
+      },
+      "widgets_values": [
+        "(full shot)a man and a woman are lying side by side on the grass.",
+        "(full shot)a man and a woman are lying side by side on the grass.",
+        3.5
+      ]
+    },
+    {
+      "id": 32,
+      "type": "UNETLoader",
+      "pos": {
+        "0": -189,
+        "1": 1526
+      },
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 4,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            30
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "unet/flux1-dev-fp8.safetensors",
+        "fp8_e4m3fn"
+      ]
+    },
+    {
+      "id": 60,
+      "type": "LoadOmniGen",
+      "pos": {
+        "0": 1373.865966796875,
+        "1": 963.9996337890625
+      },
+      "size": {
+        "0": 254.40000915527344,
+        "1": 26
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "omnigen_path",
+          "type": "TEXT",
+          "link": 70
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Omnigen",
+          "type": "PIPE_LINE",
+          "links": [
+            71
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadOmniGen"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 38,
+      "type": "PreviewImage",
+      "pos": {
+        "0": 938,
+        "1": 1779
+      },
+      "size": {
+        "0": 210,
+        "1": 246
+      },
+      "flags": {},
+      "order": 25,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 35
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 36,
+      "type": "XlabsSampler",
+      "pos": {
+        "0": 609,
+        "1": 1477
+      },
+      "size": {
+        "0": 342.5999755859375,
+        "1": 282
+      },
+      "flags": {},
+      "order": 19,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 30
+        },
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 31
+        },
+        {
+          "name": "neg_conditioning",
+          "type": "CONDITIONING",
+          "link": 33
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 39,
+          "shape": 7
+        },
+        {
+          "name": "controlnet_condition",
+          "type": "ControlNetCondition",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            34
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "XlabsSampler"
+      },
+      "widgets_values": [
+        371008963580483,
+        "fixed",
+        20,
+        20,
+        3,
+        0,
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "type": "PromptTextNode",
+      "pos": {
+        "0": -49.98473358154297,
+        "1": 15.760406494140625
+      },
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "TEXT",
+          "type": "TEXT",
+          "links": [
+            48
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PromptTextNode"
+      },
+      "widgets_values": [
+        "a beautiful woman in dress"
+      ]
+    },
+    {
+      "id": 27,
+      "type": "SaveImage",
+      "pos": {
+        "0": 2185.86376953125,
+        "1": 796.9991455078125
+      },
+      "size": {
+        "0": 315,
+        "1": 270
+      },
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 53
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "PromptTextNode",
+      "pos": {
+        "0": 1281,
+        "1": 83
+      },
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "TEXT",
+          "type": "TEXT",
+          "links": [
+            50
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PromptTextNode"
+      },
+      "widgets_values": [
+        "a handsome man in suit"
+      ]
+    },
+    {
+      "id": 61,
+      "type": "PromptTextNode",
+      "pos": {
+        "0": 1252,
+        "1": 1062
+      },
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "TEXT",
+          "type": "TEXT",
+          "links": [
+            70
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PromptTextNode"
+      },
+      "widgets_values": [
+        "OmniGen-v1"
+      ]
+    },
+    {
+      "id": 48,
+      "type": "LoadImage",
+      "pos": {
+        "0": 1648,
+        "1": 1476
+      },
+      "size": {
+        "0": 315,
+        "1": 314
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            81
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "pasted/image (29).png",
+        "image"
+      ]
+    },
+    {
+      "id": 25,
+      "type": "PromptTextNode",
+      "pos": {
+        "0": 1325.865966796875,
+        "1": 705.999267578125
+      },
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "TEXT",
+          "type": "TEXT",
+          "links": [
+            52
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PromptTextNode"
+      },
+      "widgets_values": [
+        "A woman from image_1 and a woman from image_2 are sitting across from each other at a cozy coffee shop, each holding a cup of coffee and engaging in conversation.r"
+      ]
+    },
+    {
+      "id": 44,
+      "type": "OmniGenNode",
+      "pos": {
+        "0": 1811.8660888671875,
+        "1": 750.9991455078125
+      },
+      "size": {
+        "0": 315,
+        "1": 378
+      },
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prompt_text",
+          "type": "TEXT",
+          "link": 52
+        },
+        {
+          "name": "omnigen_pipe",
+          "type": "PIPE_LINE",
+          "link": 71,
+          "shape": 7
+        },
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": 82,
+          "shape": 7
+        },
+        {
+          "name": "image_2",
+          "type": "IMAGE",
+          "link": 81,
+          "shape": 7
+        },
+        {
+          "name": "image_3",
+          "type": "IMAGE",
+          "link": null,
+          "shape": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            53
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OmniGenNode"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        50,
+        3.45,
+        1.76,
+        1024,
+        true,
+        false,
+        false,
+        200,
+        "randomize"
+      ]
+    },
+    {
+      "id": 49,
+      "type": "LoadImage",
+      "pos": {
+        "0": 1244,
+        "1": 1459
+      },
+      "size": {
+        "0": 315,
+        "1": 314
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            82
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "pasted/image (28).png",
+        "image"
+      ]
+    },
+    {
+      "id": 51,
+      "type": "SaveImage",
+      "pos": {
+        "0": 1804,
+        "1": 1970
+      },
+      "size": {
+        "0": 315,
+        "1": 270
+      },
+      "flags": {},
+      "order": 18,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 65
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 47,
+      "type": "OpenposePreprocessor",
+      "pos": {
+        "0": 1449,
+        "1": 2038
+      },
+      "size": {
+        "0": 315,
+        "1": 174
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            65
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "POSE_KEYPOINT",
+          "type": "POSE_KEYPOINT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "OpenposePreprocessor"
+      },
+      "widgets_values": [
+        "enable",
+        "enable",
+        "disable",
+        512,
+        "disable"
+      ]
+    },
+    {
+      "id": 50,
+      "type": "LoadImage",
+      "pos": {
+        "0": 1083,
+        "1": 1966
+      },
+      "size": {
+        "0": 315,
+        "1": 314.0001220703125
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "shot_01803_.png",
+        "image"
+      ]
+    }
+  ],
+  "links": [
+    [
+      28,
+      33,
+      0,
+      34,
+      0,
+      "CLIP"
+    ],
+    [
+      29,
+      29,
+      0,
+      35,
+      1,
+      "VAE"
+    ],
+    [
+      30,
+      32,
+      0,
+      36,
+      0,
+      "MODEL"
+    ],
+    [
+      31,
+      34,
+      0,
+      36,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      32,
+      33,
+      0,
+      37,
+      0,
+      "CLIP"
+    ],
+    [
+      33,
+      37,
+      0,
+      36,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      34,
+      36,
+      0,
+      35,
+      0,
+      "LATENT"
+    ],
+    [
+      35,
+      35,
+      0,
+      38,
+      0,
+      "IMAGE"
+    ],
+    [
+      39,
+      39,
+      0,
+      36,
+      3,
+      "LATENT"
+    ],
+    [
+      48,
+      2,
+      0,
+      42,
+      0,
+      "TEXT"
+    ],
+    [
+      49,
+      42,
+      0,
+      7,
+      0,
+      "IMAGE"
+    ],
+    [
+      50,
+      10,
+      0,
+      43,
+      0,
+      "TEXT"
+    ],
+    [
+      51,
+      43,
+      0,
+      15,
+      0,
+      "IMAGE"
+    ],
+    [
+      52,
+      25,
+      0,
+      44,
+      0,
+      "TEXT"
+    ],
+    [
+      53,
+      44,
+      0,
+      27,
+      0,
+      "IMAGE"
+    ],
+    [
+      54,
+      45,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      55,
+      35,
+      0,
+      45,
+      1,
+      "IMAGE"
+    ],
+    [
+      56,
+      16,
+      0,
+      45,
+      0,
+      "TEXT"
+    ],
+    [
+      65,
+      47,
+      0,
+      51,
+      0,
+      "IMAGE"
+    ],
+    [
+      70,
+      61,
+      0,
+      60,
+      0,
+      "TEXT"
+    ],
+    [
+      71,
+      60,
+      0,
+      44,
+      1,
+      "PIPE_LINE"
+    ],
+    [
+      81,
+      48,
+      0,
+      44,
+      3,
+      "IMAGE"
+    ],
+    [
+      82,
+      49,
+      0,
+      44,
+      2,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "role1",
+      "bounding": [
+        -176,
+        -39,
+        1323,
+        540
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "role2",
+      "bounding": [
+        1267,
+        -14,
+        1185,
+        493
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "pose control",
+      "bounding": [
+        -192,
+        642,
+        1348,
+        656
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "shot",
+      "bounding": [
+        1290,
+        608,
+        1399,
+        684
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "全局图",
+      "bounding": [
+        -203,
+        1423,
+        1366,
+        630
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6115909044841511,
+      "offset": [
+        431.68148648971464,
+        -141.65069126353933
+      ]
+    }
+  },
+  "version": 0.4
+}
