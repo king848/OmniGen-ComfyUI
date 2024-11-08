@@ -6,7 +6,7 @@ aifsh_dir = osp.join(folder_paths.models_dir,"AIFSH")
 sys.path.append(now_dir)
 
 from huggingface_hub import snapshot_download
-omnigen_dir = osp.join(aifsh_dir,"Shitao/OmniGen-v1")
+omnigen_dir = osp.join(aifsh_dir,"Shitao")
 tmp_dir = osp.join(now_dir, "tmp")
 import os
 import shutil
@@ -16,16 +16,42 @@ import numpy as np
 from PIL import Image
 from OmniGen import OmniGenPipeline
 
-class OmniGenNode:
+
+class LoadOmniGen:
     def __init__(self):
         if not osp.exists(osp.join(omnigen_dir,"model.safetensors")):
-            snapshot_download("Shitao/OmniGen-v1",local_dir=omnigen_dir)
+            snapshot_download("Shitao/OmniGen-v1",local_dir=omnigen_dir+'/'+"OmniGen")
+    @classmethod
+    def INPUT_TYPES(s):
+        return {"required": {
+            "omnigen_path": ("TEXT",{
+                    "tooltip":"OmniGen-v1"
+                },),
+            }
+            }
+
+    RETURN_TYPES = ("PIPE_LINE",)
+    RETURN_NAMES = ("Omnigen",)
+    FUNCTION = "loadmodel"
+    CATEGORY = "AIFSH_OmniGen"
+
+    def loadmodel(self,omnigen_path):
+        if not hasattr( self, "omnigen_pipe" ):
+            setattr( self, "omnigen_pipe", OmniGenPipeline.from_pretrained(omnigen_dir+'/'+omnigen_path) )
+        omnigen_pipe = getattr( self, "omnigen_pipe" )
+        omnigen_pipe = OmniGenPipeline.from_pretrained(omnigen_dir+'/'+omnigen_path)
+        return (omnigen_pipe,)
+
+class OmniGenNode:
     @classmethod
     def INPUT_TYPES(s):
         return {
             "required":{
                 "prompt_text":("TEXT",{
                     "tooltip":"you only need image_1, text will auto be <img><|image_1|></img>"
+                }),
+                "omnigen_pipe":("PIPE_LINE",{
+                    "tooltip":"omnigen pipline"
                 }),
                 "height":("INT",{
                     "default":1024,
@@ -110,13 +136,9 @@ class OmniGenNode:
             img_pil.save(f.name)
         return f.name
 
-    def gen(self,prompt_text,height,width,num_inference_steps,guidance_scale,
+    def gen(self,prompt_text,omnigen_pipe,height,width,num_inference_steps,guidance_scale,
             img_guidance_scale,max_input_image_size,separate_cfg_infer,offload_model,
             use_input_image_size_as_output,seed,image_1=None,image_2=None,image_3=None):
-        if not hasattr( self, "omnigen_pipe" ):
-            setattr( self, "omnigen_pipe", OmniGenPipeline.from_pretrained(omnigen_dir) )
-        pipe = getattr( self, "omnigen_pipe" )
-        pipe = OmniGenPipeline.from_pretrained(omnigen_dir)
         input_images = []
         os.makedirs(tmp_dir,exist_ok=True)
         if image_1 is not None:
@@ -135,7 +157,7 @@ class OmniGenNode:
             input_images = None
             
         print(prompt_text)
-        output = pipe(
+        output = omnigen_pipe(
             prompt=prompt_text,
             input_images=input_images,
             height=height,
@@ -159,5 +181,6 @@ class OmniGenNode:
 
 
 NODE_CLASS_MAPPINGS = {
+    "LoadOmniGen": LoadOmniGen,
     "OmniGenNode": OmniGenNode
 }
