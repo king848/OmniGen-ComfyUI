@@ -1,3 +1,7 @@
+# 优化
+添加LoadOmniGen节点，避免每次推理需要load safetensors。
+
+
 # OmniGen-ComfyUI
 a custom node for [OmniGen](https://github.com/VectorSpaceLab/OmniGen), you can find [workflow here](./doc/)
 
